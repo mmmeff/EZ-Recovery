@@ -1,7 +1,7 @@
 <resources>
 
     <style name="AppTheme" parent="android:Theme.Holo">
-        <item name="android:windowBackground">@drawable/ezbg</item>
+<!--         <item name="android:windowBackground">@drawable/ezbg</item> -->
     </style>
 
 </resources>

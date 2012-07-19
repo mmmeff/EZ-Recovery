@@ -1,6 +1,5 @@
 package com.mmmeff.vzwgs3.ez_recovery;
 
-import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;

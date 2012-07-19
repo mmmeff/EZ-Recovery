@@ -21,11 +21,12 @@ public final class R {
         public static final int ic_launcher=0x7f020002;
     }
     public static final class id {
+        public static final int adView=0x7f08000d;
         public static final int browseButton=0x7f08000a;
         public static final int button1=0x7f080009;
         public static final int button2=0x7f080008;
         public static final int editText1=0x7f080003;
-        public static final int menu_settings=0x7f08000d;
+        public static final int menu_settings=0x7f08000e;
         public static final int pager=0x7f08000b;
         public static final int pager_title_strip=0x7f08000c;
         public static final int radioButtonCWM=0x7f080006;

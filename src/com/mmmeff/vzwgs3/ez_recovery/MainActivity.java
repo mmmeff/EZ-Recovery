@@ -14,27 +14,25 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 public class MainActivity extends FragmentActivity {
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
-    ViewPager mViewPager;
-    FileMan fileman;
-    Commander commander;
-
+    
+    private ViewPager mViewPager;
+    private FileMan fileman;
+    private Commander commander;
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
+    	
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        // Create the adapter that will return a fragment for each of the three primary sections
-        // of the app.
+
         MyPagerAdapter adapter = new MyPagerAdapter(this);
-        ViewPager mViewPager = (ViewPager) findViewById(R.id.pager);
+        mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(adapter);
         mViewPager.setCurrentItem(0);
         
         fileman = new FileMan(this);
         commander = new Commander();
-
+        
     }
 
     @Override
