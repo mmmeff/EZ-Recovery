@@ -31,6 +31,8 @@ public class MainActivity extends FragmentActivity {
         mViewPager.setAdapter(adapter);
         mViewPager.setCurrentItem(0);
         
+        fileman = new FileMan(this);
+        
 
     }
 
