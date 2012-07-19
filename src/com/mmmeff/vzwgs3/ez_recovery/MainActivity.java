@@ -19,6 +19,7 @@ public class MainActivity extends FragmentActivity {
      */
     ViewPager mViewPager;
     FileMan fileman;
+    Commander commander;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -32,7 +33,7 @@ public class MainActivity extends FragmentActivity {
         mViewPager.setCurrentItem(0);
         
         fileman = new FileMan(this);
-        
+        commander = new Commander();
 
     }
 

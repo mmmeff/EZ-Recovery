@@ -133,7 +133,7 @@ public class FileMan {
 		try {
 			//create the file
 			File stamp_file = new File(ASSET_LOCATION + "/" + VERSION);
-			stamp_file.mkdirs();
+			//stamp_file.mkdirs();
 			stamp_file.createNewFile();
 			FileOutputStream file_out = new FileOutputStream(stamp_file);
 			OutputStreamWriter osw = new OutputStreamWriter(file_out); 
@@ -147,7 +147,7 @@ public class FileMan {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			Log.e(TAG, e.getMessage());
-		} catch (IOException e) {
+		} catch (IOException e) { 
 			e.printStackTrace();
 			Log.e(TAG, e.getMessage());
 		}

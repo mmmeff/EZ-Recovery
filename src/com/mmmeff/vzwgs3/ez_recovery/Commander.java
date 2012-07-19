@@ -17,7 +17,7 @@ public class Commander {
 	public Commander(){
 		try {
 			//create a process thread and ask for root permissions
-			process = Runtime.getRuntime().exec("sh");
+			process = Runtime.getRuntime().exec("su");
 			os = new DataOutputStream(process.getOutputStream());
 		} catch (IOException e) {
 			e.printStackTrace();
