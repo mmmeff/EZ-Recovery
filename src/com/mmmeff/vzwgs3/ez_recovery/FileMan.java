@@ -24,7 +24,7 @@ public class FileMan {
 	private Context context;
 
 	/** the version of the app - used for version-stamping assets **/
-	private String VERSION = context.getString(R.string.version);
+	private String VERSION;
 
 	/** Location of the assets directory on the sdcard **/
 	private final String ASSET_LOCATION = "/sdcard/gs3ezrecovery";
@@ -40,7 +40,8 @@ public class FileMan {
 	public FileMan(Context context) {
 
 		this.context = context;
-
+		VERSION = context.getString(R.string.version);
+		
 		// check if files for the current version already exist.
 		switch (CheckForExistence()) {
 		case UPTODATE: // all set, we're done here!
@@ -131,8 +132,10 @@ public class FileMan {
 	private void StampDirectory() {
 		try {
 			//create the file
-			FileOutputStream file_out = context.openFileOutput(ASSET_LOCATION
-					+ "/" + VERSION, Context.MODE_WORLD_READABLE);
+			File stamp_file = new File(ASSET_LOCATION + "/" + VERSION);
+			stamp_file.mkdirs();
+			stamp_file.createNewFile();
+			FileOutputStream file_out = new FileOutputStream(stamp_file);
 			OutputStreamWriter osw = new OutputStreamWriter(file_out); 
 
 	       // leave the file empty
@@ -158,11 +161,10 @@ public class FileMan {
 	 *         FileExistence.UNEXISTENT if directory/files are not found
 	 */
 	private FileExistence CheckForExistence() {
-		File file = context.getFileStreamPath(ASSET_LOCATION);
+		File file = new File(ASSET_LOCATION);
 		if (file.isDirectory()) {
 			// directory exists, so check if the files are up to date
-			File stamp = context.getFileStreamPath(ASSET_LOCATION + "/"
-					+ VERSION);
+			File stamp = new File(ASSET_LOCATION + "/" + VERSION);
 			if (stamp.exists()) {
 				return FileExistence.UPTODATE;
 			} else
