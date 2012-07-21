@@ -11,72 +11,73 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:padding="@dimen/padding_medium"
-        android:text="descrip"
+        android:text="@string/recovery_descrip"
         tools:context=".MainActivity" />
 
     <RadioGroup
-        android:id="@+id/radioGroup1"
-        android:layout_width="wrap_content"
+        android:id="@+id/recovery_radioGroup1"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true" >
+        android:layout_below="@+id/textView1" >
 
         <RadioButton
-            android:id="@+id/radioButtonCustom"
+            android:id="@+id/recovery_radioButtonCustom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="custom-BLA" />
-
+            android:text="@string/recovery_option_custom" />
+
         <EditText
             android:id="@+id/editText1"
-            android:layout_width="272dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginRight="45dp"
             android:ems="10"
-            android:hint="enter full path" />
+            android:hint="@string/recovery_path_hint" >
+        </EditText>
 
         <RadioButton
-            android:id="@+id/radioButtonInvisiblekV2"
+            android:id="@+id/recovery_radioButtonRecovery"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="invisiblekv2 blah" />
+            android:text="@string/recovery_option_recovery" />
 
         <RadioButton
-            android:id="@+id/radioButtonStock"
+            android:id="@+id/recovery_radioButtonHybrid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="stockblah" />
+            android:text="@string/recovery_option_hybrid" />
 
         <RadioButton
-            android:id="@+id/radioButtonCWM"
+            android:id="@+id/recovery_radioButtonStock"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="cwmblah" />
+            android:text="@string/recovery_option_stock" />
 
-        <RadioButton
-            android:id="@+id/radioButtonTWRP"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="twrp blah" />
     </RadioGroup>
 
-    <Button
-        android:id="@+id/button2"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:text="Reboot Recovery"
-        android:width="@android:dimen/thumbnail_width" />
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_alignBottom="@+id/button1"
+        android:layout_below="@+id/recovery_radioGroup1"
+        android:layout_toRightOf="@+id/button1" >
 
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/button2"
-        android:layout_alignParentRight="true"
-        android:text="do it blah"
-        android:width="@android:dimen/thumbnail_width" />
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_below="@+id/recovery_radioGroup1"
+            android:text="@string/recovery_flashButton"
+            android:width="@android:dimen/thumbnail_width" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@+id/recovery_radioGroup1"
+            android:text="@string/recovery_rebootButton"
+            android:width="@android:dimen/thumbnail_width" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/browseButton"
@@ -84,9 +85,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/radioGroup1"
-        android:layout_marginTop="29dp"
+        android:layout_alignTop="@+id/recovery_radioGroup1"
+        android:layout_marginTop="34dp"
         android:clickable="false"
-        android:text="..." />
+        android:text="@string/browse_elipsis" />
+
+    <Spinner
+        android:id="@+id/recovery_recovery_spinner"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/browseButton"
+        android:layout_marginTop="-6dp" />
+    
+    <Spinner
+        android:id="@+id/recovery_hybrid_spinner"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/recovery_recovery_spinner"
+        android:layout_marginTop="1dp" />
 
 </RelativeLayout>

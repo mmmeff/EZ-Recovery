@@ -92,6 +92,7 @@ public class FileMan {
 		try {
 			files = assetManager.list("");
 		} catch (IOException e) {
+			e.printStackTrace();
 			Log.e("tag", e.getMessage());
 		}
 		
@@ -108,6 +109,7 @@ public class FileMan {
 				out.close();
 				out = null;
 			} catch (Exception e) {
+				e.printStackTrace();
 				Log.e("tag", e.getMessage());
 			}
 		}

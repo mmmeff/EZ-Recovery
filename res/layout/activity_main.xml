@@ -2,6 +2,7 @@
     xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    
     android:orientation="vertical" >
 
     <android.support.v4.view.ViewPager
@@ -32,6 +33,6 @@
         ads:adSize="SMART_BANNER"
         ads:adUnitId="a150079051621f0"
         ads:loadAdOnCreate="true" 
-        ads:testDevices="31C3BEB6FC5B56F3E9E466015212377E" />
+        ads:testDevices="6A115F6ED54A6A38EE2AE3DF3F9AD1FB" />
 
 </LinearLayout>
