@@ -1,25 +1,15 @@
 package com.mmmeff.vzwgs3.ez_recovery;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
-import android.widget.TextView;
+import android.widget.EditText;
 
 public class MainActivity extends FragmentActivity {
 
 	private ViewPager mViewPager;
-	private FileMan fileman;
-	private Commander commander;
+	private EditText pathField;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -32,9 +22,16 @@ public class MainActivity extends FragmentActivity {
 		mViewPager.setAdapter(adapter);
 		mViewPager.setCurrentItem(0);
 
-		fileman = new FileMan(this);
-		commander = new Commander();
+		pathField = (EditText) findViewById(R.id.pathField);
 
 	}
+	
+	public void onActivityResult(int requestCode,int resultCode,Intent data)
+    {
+     super.onActivityResult(requestCode, resultCode, data);
+
+     String extraData = data.getStringExtra("path");
+     pathField.setText(extraData);
+    }
 
 }

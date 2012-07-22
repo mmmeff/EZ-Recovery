@@ -104,7 +104,9 @@ public class Commander {
 			path += "recovery_rec_twrp220";
 		} else if (title.equals("Invisblek v2 Kernel")){
 			path += "recovery_hyb_invisiblekv2.img";
-		} 
+		} else if (title.equals("Stock")){
+			path += "recovery_rec_stock";
+		}
 		
 		path += ".img";
 		

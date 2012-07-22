@@ -99,7 +99,7 @@ public class MyPagerAdapter extends PagerAdapter {
                 			success = commander.FlashRecovery((String) recovery_hybridSpinner.getSelectedItem());
                 			break;
                 		case R.id.recovery_radioButtonStock:
-                			success = commander.FlashRecovery("recovery_rec_stock.img");
+                			success = commander.FlashRecovery("Stock");
                 			break;
                 		default:
                 			Toast toast = Toast.makeText(context, "Please make a selection.", Toast.LENGTH_SHORT);
@@ -140,6 +140,24 @@ public class MyPagerAdapter extends PagerAdapter {
     			}
     		};
     		rebootButton.setOnClickListener(rebootListener);
+    		
+    		OnClickListener browseListener = new OnClickListener() {
+    			public void onClick(View v) {
+    				FileDialog fd = new FileDialog(context);
+    		    	fd.setListener(new FileDialog.ActionListener(){
+    		    	    public void userAction(int action, String filePath)
+    		    	    {
+    		    	        // Test if user select a file
+    		    	        if (action == FileDialog.ACTION_SELECTED_FILE){
+    		    	        	customRecoveryPathField.setText(filePath);
+    		    	        }
+    		    	            
+    		    	        	//flashRecovery(false, filePath);
+    		    	    }});
+    		    	fd.selectFile();
+    			}
+    		};
+    		browseButton.setOnClickListener(browseListener);
     		
             break;
         case 2:
