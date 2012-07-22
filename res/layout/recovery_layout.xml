@@ -15,7 +15,7 @@
         tools:context=".MainActivity" />
 
     <RadioGroup
-        android:id="@+id/recovery_radioGroup1"
+        android:id="@+id/radioGroup"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView1" >
@@ -25,14 +25,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/recovery_option_custom" />
-
+
         <EditText
-            android:id="@+id/editText1"
+            android:id="@+id/pathField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="45dp"
             android:ems="10"
-            android:hint="@string/recovery_path_hint" >
+            android:hint="@string/recovery_path_hint"
+            android:maxLines="1" >
+
         </EditText>
 
         <RadioButton
@@ -57,24 +59,22 @@
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-        android:layout_alignBottom="@+id/button1"
-        android:layout_below="@+id/recovery_radioGroup1"
-        android:layout_toRightOf="@+id/button1" >
+        android:layout_height="fill_parent"
+        android:layout_alignBottom="@+id/flashButton"
+        android:layout_below="@+id/radioGroup"
+        android:layout_toRightOf="@+id/flashButton" >
 
         <Button
-            android:id="@+id/button1"
+            android:id="@+id/flashButton"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:layout_below="@+id/recovery_radioGroup1"
             android:text="@string/recovery_flashButton"
             android:width="@android:dimen/thumbnail_width" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/rebootButton"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_below="@+id/recovery_radioGroup1"
             android:text="@string/recovery_rebootButton"
             android:width="@android:dimen/thumbnail_width" />
     </LinearLayout>
@@ -85,7 +85,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/recovery_radioGroup1"
+        android:layout_alignTop="@+id/radioGroup"
         android:layout_marginTop="34dp"
         android:clickable="false"
         android:text="@string/browse_elipsis" />

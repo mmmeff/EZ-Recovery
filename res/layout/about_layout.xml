@@ -3,15 +3,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
+    <ImageView
+        android:id="@+id/logoImageView"
+        android:layout_width="fill_parent"
+        android:layout_height="100dp"
         android:layout_alignParentTop="true"
-        android:padding="@dimen/padding_medium"
-        android:text="ABOUT THE APP AND THANKS"
-        tools:context=".MainActivity" />
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/ic_launcher" />
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/logoImageView" >
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="314dp"
+            android:padding="@dimen/padding_medium"
+            android:text="@string/about_descrip"
+            tools:context=".MainActivity" />
+    </ScrollView>
 
 </RelativeLayout>
