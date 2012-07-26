@@ -1,4 +1,4 @@
-package com.mmmeff.vzwgs3.ez_recovery;
+package com.mmmeff.ez;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

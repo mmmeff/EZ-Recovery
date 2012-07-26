@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.mmmeff.vzwgs3.ez_recovery"
+    package="com.mmmeff.ez"
     android:versionCode="4"
-    android:windowSoftInputMode="stateAlwaysHidden|adjustResize|adjustPan" >
+    android:windowSoftInputMode="stateAlwaysHidden|adjustResize|adjustPan" 
     android:versionName="2.0" >
     
     

@@ -1,4 +1,6 @@
-package com.mmmeff.vzwgs3.ez_recovery;
+package com.mmmeff.ez;
+
+
 
 import android.content.Intent;
 import android.os.Bundle;

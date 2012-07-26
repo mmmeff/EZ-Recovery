@@ -1,5 +1,5 @@
 /** Automatically generated file. DO NOT MODIFY */
-package com.mmmeff.vzwgs3.ez_recovery;
+package com.mmmeff.ez;
 
 public final class BuildConfig {
     public final static boolean DEBUG = true;

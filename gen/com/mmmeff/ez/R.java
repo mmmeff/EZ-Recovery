@@ -5,7 +5,7 @@
  * should not be modified by hand.
  */
 
-package com.mmmeff.vzwgs3.ez_recovery;
+package com.mmmeff.ez;
 
 public final class R {
     public static final class array {

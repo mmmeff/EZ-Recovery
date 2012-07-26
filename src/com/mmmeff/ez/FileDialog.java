@@ -1,4 +1,4 @@
-package com.mmmeff.vzwgs3.ez_recovery;
+package com.mmmeff.ez;
 
 /*
  * Copyright (c) 2011 Sylvain DANGIN

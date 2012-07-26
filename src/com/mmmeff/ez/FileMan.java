@@ -1,4 +1,4 @@
-package com.mmmeff.vzwgs3.ez_recovery;
+package com.mmmeff.ez;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+
+
 
 import android.annotation.SuppressLint;
 import android.content.Context;
