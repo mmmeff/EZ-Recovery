@@ -28,7 +28,7 @@ public class FileMan {
 	private String VERSION;
 
 	/** Location of the assets directory on the sdcard **/
-	private final String ASSET_LOCATION = "/sdcard/gs3ezrecovery";
+	public static String ASSET_LOCATION = "/mnt/sdcard/gs3ezrecovery";
 
 	/**
 	 * Default constructor for the File Manager. This class handles all the file
@@ -103,7 +103,7 @@ public class FileMan {
 			OutputStream out = null;
 			try {
 				in = assetManager.open(filename);
-				out = new FileOutputStream("/sdcard/gs3ezrecovery/" + filename);
+				out = new FileOutputStream(ASSET_LOCATION + "/" + filename);
 				CopyFile(in, out);
 				in.close();
 				in = null;

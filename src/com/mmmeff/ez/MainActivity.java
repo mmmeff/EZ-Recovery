@@ -12,11 +12,13 @@ public class MainActivity extends FragmentActivity {
 
 	private ViewPager mViewPager;
 	private EditText pathField;
+	private FileMan fileman;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
+		fileman = new FileMan(this);
 		
 		setContentView(R.layout.activity_main);
 		MyPagerAdapter adapter = new MyPagerAdapter(this);

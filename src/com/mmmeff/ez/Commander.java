@@ -19,6 +19,10 @@ public class Commander {
 	private DataInputStream output;
 
 	public Commander(){
+		Initialize();
+	}
+	
+	private void Initialize(){
 		try {
 			//create a process thread and ask for root permissions
 			process = Runtime.getRuntime().exec("su");
@@ -27,6 +31,15 @@ public class Commander {
 		} catch (IOException e) {
 			e.printStackTrace();
 			Log.e(TAG, e.getMessage());
+		}
+	}
+	
+	private void Kill(){
+		try {
+			input.writeBytes("exit\n");
+			input.flush();
+		} catch (IOException e) {
+			Log.e(TAG, "KILLED AN ALREADY DEAD PROCESS");
 		}
 	}
 	
@@ -44,28 +57,20 @@ public class Commander {
 		}
 	}
 	
-	/**
-	 * Run a single command and return it's output
-	 * @param command
-	 * @return command output
-	 */
-	private String ExecSingleWithResults(String command){
-		try {
-			input.writeBytes(command + "\n");
-			input.flush();
-			return output.readLine();
-		} catch (IOException e) {
-			e.printStackTrace();
-			Log.e(TAG, e.getMessage());
-			return "{FAILURE}";
-		}
-	}
-	
 	private boolean ExecMulti(String[] commands){
 		try {
 			for (String command : commands){
 				input.writeBytes(command + "\n");
 				input.flush();
+			}
+			input.writeBytes("exit\n");
+			input.flush();
+			try {
+				process.waitFor();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				Log.e(TAG, e.getMessage());
 			}
 			return true;
 		} catch (IOException e) {
@@ -75,51 +80,39 @@ public class Commander {
 		}
 	}
 	
-	private String[] ExecMultiWithResults(String[] commands){
-		String[] res = new String[commands.length];
-		try {
-			for(int i = 0; i < commands.length; i++){
-				input.writeBytes(commands[i] + "\n");
-				input.flush();
-				res[i] = output.readLine();
-			}
-			return res;
-		} catch (IOException e) {
-			e.printStackTrace();
-			Log.e(TAG, e.getMessage());
-			return null;
-		}
-	}
-
 	public boolean FlashRecovery(String title) {
-		String path = "/sdcard/gs3ezrecovery/";
+		Kill();
+		Initialize();
+		String path = FileMan.ASSET_LOCATION + "/";
 		//due to java not supporting string switches until 1.7
 		//and android requiring java 1.5 or 1.6, please forgive
 		//this long and ugly if else chain :/
 		if (title.equals("CWM Touch 5.8.4.9")){
-			path += "recovery_rec_CWMT5849";
+			path += "recovery_rec_CWMT5849.img";
 		} else if (title.equals("CWM 6.0.1.0")){
-			path += "recovery_rec_CWM6010";
+			path += "recovery_rec_CWM6010.img";
 		} else if (title.equals("TWRP 2.2.0")){
-			path += "recovery_rec_twrp220";
+			path += "recovery_rec_twrp220.img";
 		} else if (title.equals("Invisblek v2 Kernel")){
 			path += "recovery_hyb_invisiblekv2.img";
 		} else if (title.equals("Stock")){
-			path += "recovery_rec_stock";
+			path += "recovery_rec_stock.img";
 		}
 		
-		path += ".img";
 		
-		String[] commands = { "dd if=" + path + " of=/dev/block/mmcblk0p18\n", "exit\n" };
+		String[] commands = { "dd if=" + path + " of=/dev/block/mmcblk0p18 bs=256k"};
 		return ExecMulti(commands);
 	}
 
 	public boolean FlashCustomRecovery(String pathToRecovery) {
-		String[] commands = { "dd if=" + pathToRecovery + " of=/dev/block/mmcblk0p18\n", "exit\n" };
+		Kill();
+		Initialize();
+		String[] commands = { "dd if=" + pathToRecovery + " of=/dev/block/mmcblk0p18 bs=256k"};
 		return ExecMulti(commands);
 	}
 
 	public void rebootRecovery() {
+		Initialize();
 		ExecSingle("reboot recovery");
 	}
 }
