@@ -37,7 +37,7 @@ public class MyPagerAdapter extends PagerAdapter {
 	}
 
 	public int getCount() {
-		return 4;
+		return 3;
 	}
 
 	public Object instantiateItem(View collection, int position) {
@@ -69,25 +69,12 @@ public class MyPagerAdapter extends PagerAdapter {
 			flashButton = (Button) view.findViewById(R.id.flashButton);
 			rebootButton = (Button) view.findViewById(R.id.rebootButton);
 
-			// set up recovery choices in spinner
+			// set up recovery choices in spinners
 			recovery_recoverySpinner = (Spinner) view
 					.findViewById(R.id.recovery_recovery_spinner);
-			recovery_recoveryAdapter = ArrayAdapter.createFromResource(
-					view.getContext(), R.array.recovery_recovery_spinner_array,
-					android.R.layout.simple_spinner_item);
-			recovery_recoveryAdapter
-					.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-			recovery_recoverySpinner.setAdapter(recovery_recoveryAdapter);
-
-			// set up hybrid recovery/kernel choices in spinner
 			recovery_hybridSpinner = (Spinner) view
 					.findViewById(R.id.recovery_hybrid_spinner);
-			recovery_hybridAdapter = ArrayAdapter.createFromResource(
-					view.getContext(), R.array.recovery_hybrid_spinner_array,
-					android.R.layout.simple_spinner_item);
-			recovery_hybridAdapter
-					.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-			recovery_hybridSpinner.setAdapter(recovery_hybridAdapter);
+			InitSpinners(view);
 
 			// configure button listeners
 			OnClickListener flashListener = new OnClickListener() {
@@ -100,10 +87,13 @@ public class MyPagerAdapter extends PagerAdapter {
 						success = commander
 								.FlashCustomRecovery(customRecoveryPathField
 										.getText().toString());
-						PreferencesSingleton.getInstance(context).prefs.edit()
+						PreferencesSingleton.getInstance(context).prefs
+								.edit()
 								.putInt("last_flash",
-										R.id.recovery_radioButtonCustom).commit();
-						PreferencesSingleton.getInstance(context).prefs.edit()
+										R.id.recovery_radioButtonCustom)
+								.commit();
+						PreferencesSingleton.getInstance(context).prefs
+								.edit()
 								.putString(
 										"last_custom",
 										customRecoveryPathField.getText()
@@ -113,29 +103,41 @@ public class MyPagerAdapter extends PagerAdapter {
 						success = commander
 								.FlashRecovery((String) recovery_recoverySpinner
 										.getSelectedItem());
-						PreferencesSingleton.getInstance(context).prefs.edit()
+						PreferencesSingleton.getInstance(context).prefs
+								.edit()
 								.putInt("last_flash",
-										R.id.recovery_radioButtonRecovery).commit();
-						PreferencesSingleton.getInstance(context).prefs.edit()
-						.putInt("last_recovery",
-								recovery_recoverySpinner.getSelectedItemPosition()).commit();
+										R.id.recovery_radioButtonRecovery)
+								.commit();
+						PreferencesSingleton.getInstance(context).prefs
+								.edit()
+								.putInt("last_recovery",
+										recovery_recoverySpinner
+												.getSelectedItemPosition())
+								.commit();
 						break;
 					case R.id.recovery_radioButtonHybrid:
 						success = commander
 								.FlashRecovery((String) recovery_hybridSpinner
 										.getSelectedItem());
-						PreferencesSingleton.getInstance(context).prefs.edit()
+						PreferencesSingleton.getInstance(context).prefs
+								.edit()
 								.putInt("last_flash",
-										R.id.recovery_radioButtonHybrid).commit();
-						PreferencesSingleton.getInstance(context).prefs.edit()
-						.putInt("last_hybrid",
-								recovery_hybridSpinner.getSelectedItemPosition()).commit();
+										R.id.recovery_radioButtonHybrid)
+								.commit();
+						PreferencesSingleton.getInstance(context).prefs
+								.edit()
+								.putInt("last_hybrid",
+										recovery_hybridSpinner
+												.getSelectedItemPosition())
+								.commit();
 						break;
 					case R.id.recovery_radioButtonStock:
 						success = commander.FlashRecovery("Stock");
-						PreferencesSingleton.getInstance(context).prefs.edit()
+						PreferencesSingleton.getInstance(context).prefs
+								.edit()
 								.putInt("last_flash",
-										R.id.recovery_radioButtonStock).commit();
+										R.id.recovery_radioButtonStock)
+								.commit();
 						break;
 					default:
 						Toast toast = Toast.makeText(context,
@@ -217,35 +219,108 @@ public class MyPagerAdapter extends PagerAdapter {
 			if (last_custom != null) {
 				customRecoveryPathField.setText(last_custom);
 			}
-			
-			int last_recovery = PreferencesSingleton.getInstance(context).prefs.getInt(
-					"last_recovery", -1);
+
+			int last_recovery = PreferencesSingleton.getInstance(context).prefs
+					.getInt("last_recovery", -1);
 			if (last_recovery != -1) {
 				recovery_recoverySpinner.setSelection(last_recovery);
 			}
-			
-			int last_hybrid = PreferencesSingleton.getInstance(context).prefs.getInt(
-					"last_hybrid", -1);
+
+			int last_hybrid = PreferencesSingleton.getInstance(context).prefs
+					.getInt("last_hybrid", -1);
 			if (last_hybrid != -1) {
 				recovery_hybridSpinner.setSelection(last_hybrid);
 			}
-			
+
 			PreferencesSingleton.getInstance(context).prefs.edit().commit();
 			break;
 		case 2:
-			resId = R.layout.kexec_layout;
-			view = inflater.inflate(resId, null);
-			break;
-		case 3:
-			resId = R.layout.romcentral_layout;
+			resId = R.layout.ezrom_layout;
 			view = inflater.inflate(resId, null);
 			break;
 
 		}
 
 		((ViewPager) collection).addView(view, 0);
-		
+
 		return view;
+	}
+
+	private void InitSpinners(View view) {
+
+		String device = PreferencesSingleton.getInstance(context).prefs
+				.getString("device", null);
+		if (device == null){
+			return;
+		}
+		if (device.equals("vzw")) {
+			recovery_recoveryAdapter = ArrayAdapter.createFromResource(
+					view.getContext(),
+					R.array.recovery_vzw_recovery_spinner_array,
+					android.R.layout.simple_spinner_item);
+			recovery_recoveryAdapter
+					.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			recovery_recoverySpinner.setAdapter(recovery_recoveryAdapter);
+
+			recovery_hybridAdapter = ArrayAdapter.createFromResource(
+					view.getContext(),
+					R.array.recovery_vzw_hybrid_spinner_array,
+					android.R.layout.simple_spinner_item);
+			recovery_hybridAdapter
+					.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			recovery_hybridSpinner.setAdapter(recovery_hybridAdapter);
+		} else if (device.equals("att")) {
+			recovery_recoveryAdapter = ArrayAdapter.createFromResource(
+					view.getContext(),
+					R.array.recovery_att_recovery_spinner_array,
+					android.R.layout.simple_spinner_item);
+			recovery_recoveryAdapter
+					.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			recovery_recoverySpinner.setAdapter(recovery_recoveryAdapter);
+
+			recovery_hybridAdapter = ArrayAdapter.createFromResource(
+					view.getContext(),
+					R.array.recovery_att_hybrid_spinner_array,
+					android.R.layout.simple_spinner_item);
+			recovery_hybridAdapter
+					.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			recovery_hybridSpinner.setAdapter(recovery_hybridAdapter);
+		} else if (device.equals("spr")) {
+			recovery_recoveryAdapter = ArrayAdapter.createFromResource(
+					view.getContext(),
+					R.array.recovery_spr_recovery_spinner_array,
+					android.R.layout.simple_spinner_item);
+			recovery_recoveryAdapter
+					.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			recovery_recoverySpinner.setAdapter(recovery_recoveryAdapter);
+
+			recovery_hybridAdapter = ArrayAdapter.createFromResource(
+					view.getContext(),
+					R.array.recovery_spr_hybrid_spinner_array,
+					android.R.layout.simple_spinner_item);
+			recovery_hybridAdapter
+					.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			recovery_hybridSpinner.setAdapter(recovery_hybridAdapter);
+		} else if (device.equals("tmo")) {
+			recovery_recoveryAdapter = ArrayAdapter.createFromResource(
+					view.getContext(),
+					R.array.recovery_tmo_recovery_spinner_array,
+					android.R.layout.simple_spinner_item);
+			recovery_recoveryAdapter
+					.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			recovery_recoverySpinner.setAdapter(recovery_recoveryAdapter);
+
+			recovery_hybridAdapter = ArrayAdapter.createFromResource(
+					view.getContext(),
+					R.array.recovery_tmo_hybrid_spinner_array,
+					android.R.layout.simple_spinner_item);
+			recovery_hybridAdapter
+					.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			recovery_hybridSpinner.setAdapter(recovery_hybridAdapter);
+		} else {
+
+		}
+
 	}
 
 	@Override
@@ -269,13 +344,11 @@ public class MyPagerAdapter extends PagerAdapter {
 	public CharSequence getPageTitle(int position) {
 		switch (position) {
 		case 0:
-			return context.getResources().getString(R.string.title_section3);
+			return context.getResources().getString(R.string.title_section0);
 		case 1:
 			return context.getResources().getString(R.string.title_section1);
 		case 2:
 			return context.getResources().getString(R.string.title_section2);
-		case 3:
-			return context.getResources().getString(R.string.title_section4);
 		}
 		return null;
 	}

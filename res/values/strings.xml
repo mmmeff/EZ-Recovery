@@ -1,14 +1,13 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <string name="app_name">EZ-Recovery</string>
-	<string name="title_section4">Rom Central</string>
-    <string name="title_section3">About</string>
-    <string name="title_section2">Kexec</string>
+	<string name="title_section2">EZ-Rom</string>
+    <string name="title_section0">About</string>
     <string name="title_section1">Recovery</string>
     <string name="browse_elipsis">&#8230;</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_main">EZ-Recovery</string>
-    <string name="version">2.2</string>
+    <string name="version">3.0</string>
     <string name="recovery_descrip"> Choose from stock recovery,
          a custom recovery of your liking, a custom recovery, or even a recovery/kernel hybrid! In order
          to reboot into your new recovery, you can either press the "Reboot Recovery" button below, or you can
@@ -23,22 +22,51 @@
     <string name="recovery_option_stock">Stock</string>
     <string name="recovery_flashButton">Flash!</string>
     <string name="recovery_rebootButton">Reboot Recovery</string>
-    
-    <string name="kexec_descrip">EZ-Kexec Coming soon!</string>
+ 
     
     <string name="about_descrip">
-        "Welcome to EZ-Recovery 2.3! This app will allow you to easily flash recoveries and more on your Verizon Wireless Samsung Galaxy S3.\n\n\nNote: You must be rooted to use this app!\n\n\nSpecial thanks go out to the following - this app wouldn't have happened without them:\n\n-Invisblek: Thanks for your amazing work. The community would be nowhere close to where it is today if we didn't have you, and also for the wonderful InvisiblekV2 kernel.\n-dhacker29: Your work is awe-inspiring. Thanks for all your work with CM9/10 and for your modified CWM.\n-AtLemacks: Thanks for the solid CWM Touch port.\n	</string>
+        "Welcome to EZ-Recovery 3.0! This app will allow you to easily flash recoveries and more on your Samsung Galaxy S3 for any carrier! (yay!!!).\n\n\nNote: You must be rooted to use this app!\n\n\nSpecial thanks go out to the following - this app wouldn't have happened without them:\n\n-Invisblek: Thanks for your amazing work. The community would be nowhere close to where it is today if we didn't have you, and also for the wonderful InvisiblekV2 kernel.\n-dhacker29: Your work is awe-inspiring. Thanks for all your work with CM9/10 and for your modified CWM.\n-AtLemacks: Thanks for the solid CWM Touch port.\n	</string>
 	
-    <string name="romcentral_descrip">Rom Central coming soon!</string>
+    <string name="romcentral_descrip">EZ-Rom coming soon!</string>
 
-    <string-array name="recovery_recovery_spinner_array">
+    <string-array name="recovery_vzw_recovery_spinner_array">
         <item>CWM Touch 5.8.4.9</item>
         <item>CWM 6.0.1.0</item>
 		<item>TWRP 2.2.0</item> 
     </string-array>
     
-    <string-array name="recovery_hybrid_spinner_array">
+    <string-array name="recovery_vzw_hybrid_spinner_array">
         <item>Invisblek v2 Kernel</item>
+    </string-array>
+    
+    <string-array name="recovery_spr_recovery_spinner_array">
+        <item>CWM 5.8.4.7</item>
+        <item>CWM Touch 5.8.4.7</item>
+        <item>TWRP 2.2.0</item> 
+    </string-array>
+    
+    <string-array name="recovery_spr_hybrid_spinner_array">
+        
+    </string-array>
+    
+    <string-array name="recovery_att_recovery_spinner_array">
+        <item>CWM 5.8.4.7</item>
+        <item>CWM Touch 5.8.4.7</item>
+        <item>TWRP 2.2.0</item> 
+    </string-array>
+    
+    <string-array name="recovery_att_hybrid_spinner_array">
+        
+    </string-array>
+    
+    <string-array name="recovery_tmo_recovery_spinner_array">
+        <item>CWM 5.8.4.7</item>
+        <item>CWM Touch 5.8.4.7</item>
+        <item>TWRP 2.2.0</item> 
+    </string-array>
+    
+    <string-array name="recovery_tmo_hybrid_spinner_array">
+        
     </string-array>
 
 </resources>

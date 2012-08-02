@@ -9,8 +9,14 @@ package com.mmmeff.ez;
 
 public final class R {
     public static final class array {
-        public static final int recovery_hybrid_spinner_array=0x7f060001;
-        public static final int recovery_recovery_spinner_array=0x7f060000;
+        public static final int recovery_att_hybrid_spinner_array=0x7f060005;
+        public static final int recovery_att_recovery_spinner_array=0x7f060004;
+        public static final int recovery_spr_hybrid_spinner_array=0x7f060003;
+        public static final int recovery_spr_recovery_spinner_array=0x7f060002;
+        public static final int recovery_tmo_hybrid_spinner_array=0x7f060007;
+        public static final int recovery_tmo_recovery_spinner_array=0x7f060006;
+        public static final int recovery_vzw_hybrid_spinner_array=0x7f060001;
+        public static final int recovery_vzw_recovery_spinner_array=0x7f060000;
     }
     public static final class attr {
     }
@@ -47,34 +53,31 @@ public final class R {
     public static final class layout {
         public static final int about_layout=0x7f030000;
         public static final int activity_main=0x7f030001;
-        public static final int kexec_layout=0x7f030002;
+        public static final int ezrom_layout=0x7f030002;
         public static final int recovery_layout=0x7f030003;
-        public static final int romcentral_layout=0x7f030004;
     }
     public static final class menu {
         public static final int activity_main=0x7f080000;
     }
     public static final class string {
-        public static final int about_descrip=0x7f050012;
+        public static final int about_descrip=0x7f050010;
         public static final int app_name=0x7f050000;
-        public static final int browse_elipsis=0x7f050005;
-        public static final int kexec_descrip=0x7f050011;
-        public static final int menu_settings=0x7f050006;
-        public static final int recovery_descrip=0x7f050009;
-        public static final int recovery_flashButton=0x7f05000f;
-        public static final int recovery_option_custom=0x7f05000a;
-        public static final int recovery_option_hybrid=0x7f05000d;
-        public static final int recovery_option_recovery=0x7f05000c;
-        public static final int recovery_option_stock=0x7f05000e;
-        public static final int recovery_path_hint=0x7f05000b;
-        public static final int recovery_rebootButton=0x7f050010;
-        public static final int romcentral_descrip=0x7f050013;
-        public static final int title_activity_main=0x7f050007;
-        public static final int title_section1=0x7f050004;
-        public static final int title_section2=0x7f050003;
-        public static final int title_section3=0x7f050002;
-        public static final int title_section4=0x7f050001;
-        public static final int version=0x7f050008;
+        public static final int browse_elipsis=0x7f050004;
+        public static final int menu_settings=0x7f050005;
+        public static final int recovery_descrip=0x7f050008;
+        public static final int recovery_flashButton=0x7f05000e;
+        public static final int recovery_option_custom=0x7f050009;
+        public static final int recovery_option_hybrid=0x7f05000c;
+        public static final int recovery_option_recovery=0x7f05000b;
+        public static final int recovery_option_stock=0x7f05000d;
+        public static final int recovery_path_hint=0x7f05000a;
+        public static final int recovery_rebootButton=0x7f05000f;
+        public static final int romcentral_descrip=0x7f050011;
+        public static final int title_activity_main=0x7f050006;
+        public static final int title_section0=0x7f050002;
+        public static final int title_section1=0x7f050003;
+        public static final int title_section2=0x7f050001;
+        public static final int version=0x7f050007;
     }
     public static final class style {
         /**          <item name="android:windowBackground">@drawable/ezbg</item> 

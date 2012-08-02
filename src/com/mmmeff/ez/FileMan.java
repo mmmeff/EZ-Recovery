@@ -11,12 +11,16 @@ import java.io.OutputStreamWriter;
 
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 
 @SuppressLint("SdCardPath")// this only runs on one device - hardcoding acceptable here!
-public class FileMan {
+public class FileMan implements Runnable{
 
 	/** logcat tag **/
 	private static final String TAG = "ez_recovery";
@@ -29,6 +33,12 @@ public class FileMan {
 
 	/** Location of the assets directory on the sdcard **/
 	public static String ASSET_LOCATION = "/mnt/sdcard/gs3ezrecovery";
+	
+	/** debug value that will rewrite the file directory upon every boot **/
+	private final boolean RW = true;
+	
+	/** ProgressDialog from MainActivity**/
+	private ProgressDialog pd;
 
 	/**
 	 * Default constructor for the File Manager. This class handles all the file
@@ -38,27 +48,11 @@ public class FileMan {
 	 * @param context
 	 *            The context of the main activity
 	 */
-	public FileMan(Context context) {
+	public FileMan(Context context, ProgressDialog pd) {
 
 		this.context = context;
 		VERSION = context.getString(R.string.version);
-		
-		// check if files for the current version already exist.
-		switch (CheckForExistence()) {
-		case UPTODATE: // all set, we're done here!
-			break;
-		case OUTDATED: // flush the directory then rewrite it to sdcard
-			FlushDirectory();
-			PlaceDirectory();
-			CopyAssets();
-			StampDirectory();
-			break;
-		case UNEXISTENT: // copy assets over to sdcard
-			PlaceDirectory();
-			CopyAssets();
-			StampDirectory();
-			break;
-		}
+		this.pd = pd;
 
 	}
 
@@ -164,6 +158,9 @@ public class FileMan {
 	 *         FileExistence.UNEXISTENT if directory/files are not found
 	 */
 	private FileExistence CheckForExistence() {
+		//rewrite if rewrite debug value is true
+		if (RW) return FileExistence.UNEXISTENT;
+		
 		File file = new File(ASSET_LOCATION);
 		if (file.isDirectory()) {
 			// directory exists, so check if the files are up to date
@@ -179,6 +176,35 @@ public class FileMan {
 	private enum FileExistence {
 		UPTODATE, OUTDATED, UNEXISTENT;
 	}
+
+	public void run() {
+		
+		// check if files for the current version already exist.
+		switch (CheckForExistence()) {
+		case UPTODATE: // all set, we're done here!
+			break;
+		case OUTDATED: // flush the directory then rewrite it to sdcard
+			FlushDirectory();
+			PlaceDirectory();
+			CopyAssets();
+			StampDirectory();
+			break;
+		case UNEXISTENT: // copy assets over to sdcard
+			PlaceDirectory();
+			CopyAssets();
+			StampDirectory();
+			break;
+		}
+		handler.sendEmptyMessage(0);
+	}
+	
+	private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+                pd.dismiss();
+        }
+};
+
 
 
 }
