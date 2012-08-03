@@ -2,7 +2,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
-
+    
+	<ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="fill_parent"
+        android:layout_height="200dp"
+        android:fadeScrollbars="false"
+        android:layout_alignParentLeft="true" >
+        
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
@@ -13,12 +20,13 @@
         android:padding="@dimen/padding_medium"
         android:text="@string/recovery_descrip"
         tools:context=".MainActivity" />
+     </ScrollView>
 
     <RadioGroup
         android:id="@+id/radioGroup"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView1" >
+        android:layout_below="@+id/scrollView1" >
 
         <RadioButton
             android:id="@+id/recovery_radioButtonCustom"
@@ -106,4 +114,5 @@
         android:layout_below="@+id/recovery_recovery_spinner"
         android:layout_marginTop="1dp" />
 
+   
 </RelativeLayout>

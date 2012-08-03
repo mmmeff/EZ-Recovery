@@ -8,8 +8,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 
-
-
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -19,8 +17,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
-@SuppressLint("SdCardPath")// this only runs on one device - hardcoding acceptable here!
-public class FileMan implements Runnable{
+@SuppressLint("SdCardPath")
+// this only runs on one device - hardcoding acceptable here!
+public class FileMan {
 
 	/** logcat tag **/
 	private static final String TAG = "ez_recovery";
@@ -33,12 +32,9 @@ public class FileMan implements Runnable{
 
 	/** Location of the assets directory on the sdcard **/
 	public static String ASSET_LOCATION = "/mnt/sdcard/gs3ezrecovery";
-	
+
 	/** debug value that will rewrite the file directory upon every boot **/
-	private final boolean RW = true;
-	
-	/** ProgressDialog from MainActivity**/
-	private ProgressDialog pd;
+	private final boolean RW = false;
 
 	/**
 	 * Default constructor for the File Manager. This class handles all the file
@@ -48,12 +44,32 @@ public class FileMan implements Runnable{
 	 * @param context
 	 *            The context of the main activity
 	 */
-	public FileMan(Context context, ProgressDialog pd) {
+	public FileMan(Context context) {
 
 		this.context = context;
 		VERSION = context.getString(R.string.version);
-		this.pd = pd;
 
+		Initialize();
+	}
+
+	/** take care of file business **/
+	public void Initialize() {
+		// check if files for the current version already exist.
+				switch (CheckForExistence()) {
+				case UPTODATE: // all set, we're done here!
+					break;
+				case OUTDATED: // flush the directory then rewrite it to sdcard
+					FlushDirectory();
+					PlaceDirectory();
+					CopyAssets();
+					StampDirectory();
+					break;
+				case UNEXISTENT: // copy assets over to sdcard
+					PlaceDirectory();
+					CopyAssets();
+					StampDirectory();
+					break;
+				}
 	}
 
 	/**
@@ -62,10 +78,10 @@ public class FileMan implements Runnable{
 	private void FlushDirectory() {
 		File dir = new File(ASSET_LOCATION);
 		if (dir.isDirectory()) {
-	        String[] children = dir.list();
-	        for (int i = 0; i < children.length; i++) {
-	            new File(dir, children[i]).delete();
-	        }
+			String[] children = dir.list();
+			for (int i = 0; i < children.length; i++) {
+				new File(dir, children[i]).delete();
+			}
 		}
 		dir.delete();
 
@@ -91,7 +107,7 @@ public class FileMan implements Runnable{
 			e.printStackTrace();
 			Log.e("tag", e.getMessage());
 		}
-		
+
 		for (String filename : files) {
 			InputStream in = null;
 			OutputStream out = null;
@@ -111,7 +127,7 @@ public class FileMan implements Runnable{
 		}
 
 	}
-	
+
 	/** Copies an inputstream to an outputstream - used by CopyAssets() **/
 	private void CopyFile(InputStream in, OutputStream out) throws IOException {
 		byte[] buffer = new byte[1024];
@@ -128,23 +144,23 @@ public class FileMan implements Runnable{
 	@SuppressLint("WorldReadableFiles")
 	private void StampDirectory() {
 		try {
-			//create the file
+			// create the file
 			File stamp_file = new File(ASSET_LOCATION + "/" + VERSION);
-			//stamp_file.mkdirs();
+			// stamp_file.mkdirs();
 			stamp_file.createNewFile();
 			FileOutputStream file_out = new FileOutputStream(stamp_file);
-			OutputStreamWriter osw = new OutputStreamWriter(file_out); 
+			OutputStreamWriter osw = new OutputStreamWriter(file_out);
 
-	       // leave the file empty
-	       osw.write("");
+			// leave the file empty
+			osw.write("");
 
-	       //close the file out
-	       osw.flush();
-	       osw.close();
+			// close the file out
+			osw.flush();
+			osw.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			Log.e(TAG, e.getMessage());
-		} catch (IOException e) { 
+		} catch (IOException e) {
 			e.printStackTrace();
 			Log.e(TAG, e.getMessage());
 		}
@@ -158,9 +174,10 @@ public class FileMan implements Runnable{
 	 *         FileExistence.UNEXISTENT if directory/files are not found
 	 */
 	private FileExistence CheckForExistence() {
-		//rewrite if rewrite debug value is true
-		if (RW) return FileExistence.UNEXISTENT;
-		
+		// rewrite if rewrite debug value is true
+		if (RW)
+			return FileExistence.UNEXISTENT;
+
 		File file = new File(ASSET_LOCATION);
 		if (file.isDirectory()) {
 			// directory exists, so check if the files are up to date
@@ -176,35 +193,5 @@ public class FileMan implements Runnable{
 	private enum FileExistence {
 		UPTODATE, OUTDATED, UNEXISTENT;
 	}
-
-	public void run() {
-		
-		// check if files for the current version already exist.
-		switch (CheckForExistence()) {
-		case UPTODATE: // all set, we're done here!
-			break;
-		case OUTDATED: // flush the directory then rewrite it to sdcard
-			FlushDirectory();
-			PlaceDirectory();
-			CopyAssets();
-			StampDirectory();
-			break;
-		case UNEXISTENT: // copy assets over to sdcard
-			PlaceDirectory();
-			CopyAssets();
-			StampDirectory();
-			break;
-		}
-		handler.sendEmptyMessage(0);
-	}
-	
-	private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-                pd.dismiss();
-        }
-};
-
-
 
 }

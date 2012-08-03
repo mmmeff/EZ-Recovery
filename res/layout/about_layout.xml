@@ -16,15 +16,18 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_alignParentLeft="true"
+        android:fadeScrollbars="false"
         android:layout_below="@+id/logoImageView" >
-
+
         <TextView
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="314dp"
             android:padding="@dimen/padding_medium"
+            android:scrollbars="vertical"
             android:text="@string/about_descrip"
             tools:context=".MainActivity" />
+
     </ScrollView>
 
 </RelativeLayout>
