@@ -30,10 +30,11 @@ public class MyPagerAdapter extends PagerAdapter {
 	private Button browseButton, flashButton, rebootButton;
 	private EditText customRecoveryPathField;
 	private RadioGroup recoveryRadioGroup;
+	private View view;
 
 	public MyPagerAdapter(Context context) {
 		this.context = context;
-		this.commander = new Commander();
+		this.commander = new Commander(context);
 	}
 
 	public int getCount() {
@@ -42,7 +43,7 @@ public class MyPagerAdapter extends PagerAdapter {
 
 	public Object instantiateItem(View collection, int position) {
 
-		View view = null;
+		view = null;
 		LayoutInflater inflater = (LayoutInflater) collection.getContext()
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -74,7 +75,7 @@ public class MyPagerAdapter extends PagerAdapter {
 					.findViewById(R.id.recovery_recovery_spinner);
 			recovery_hybridSpinner = (Spinner) view
 					.findViewById(R.id.recovery_hybrid_spinner);
-			InitSpinners(view);
+			InitSpinners(); 
 
 			// configure button listeners
 			OnClickListener flashListener = new OnClickListener() {
@@ -246,7 +247,7 @@ public class MyPagerAdapter extends PagerAdapter {
 		return view;
 	}
 
-	private void InitSpinners(View view) {
+	public void InitSpinners() {
 
 		String device = PreferencesSingleton.getInstance(context).prefs
 				.getString("device", null);

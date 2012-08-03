@@ -17,9 +17,11 @@ public class Commander {
 	private Process process;
 	private DataOutputStream input;
 	private DataInputStream output;
+	private Context context;
 
-	public Commander(){
+	public Commander(Context context){
 		Initialize();
+		this.context = context;
 	}
 	
 	private void Initialize(){
@@ -87,6 +89,8 @@ public class Commander {
 		//due to java not supporting string switches until 1.7
 		//and android requiring java 1.5 or 1.6, please forgive
 		//this long and ugly if else chain :/
+		String device = PreferencesSingleton.getInstance(context).prefs.getString("device", null);
+		//if
 		if (title.equals("CWM Touch 5.8.4.9")){
 			path += "recovery_rec_CWMT5849.img";
 		} else if (title.equals("CWM 6.0.1.0")){

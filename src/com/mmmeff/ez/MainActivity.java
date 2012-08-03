@@ -25,13 +25,19 @@ public class MainActivity extends FragmentActivity {
 	private ProgressDialog progressdialog;
 	final private Context context = this;
 
+	final private boolean debug_prefs = true;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 
+		if (debug_prefs)
+			PreferencesSingleton.getInstance(context).prefs.edit().clear()
+					.commit();
 		super.onCreate(savedInstanceState);
+
 		setTitle(getString(R.string.title_activity_main));
 		setContentView(R.layout.activity_main);
-		MyPagerAdapter adapter = new MyPagerAdapter(this);
+		final MyPagerAdapter adapter = new MyPagerAdapter(this);
 		mViewPager = (ViewPager) findViewById(R.id.pager);
 		mViewPager.setAdapter(adapter);
 		mViewPager.setCurrentItem(0);
@@ -63,16 +69,25 @@ public class MainActivity extends FragmentActivity {
 		final Dialog deviceDialog = new Dialog(this);
 		deviceDialog.setContentView(R.layout.device_dialog);
 		deviceDialog.setTitle(R.string.devicedialogtitle);
+		deviceDialog.setCanceledOnTouchOutside(false);
+		deviceDialog.setCancelable(false);
 		final RadioGroup carrierRadioGroup = (RadioGroup) deviceDialog
 				.findViewById(R.id.carrierRadioGroup);
-		
-		String device = PreferencesSingleton.getInstance(context).prefs.getString("device", null);
-		if (device != null) showDialog = false;	 
-		if (device.equals("att")) carrierRadioGroup.check(R.id.att_carrier_radio);
-		else if (device.equals("spr")) carrierRadioGroup.check(R.id.spr_carrier_radio);
-		else if (device.equals("tmo")) carrierRadioGroup.check(R.id.tmo_carrier_radio);
-		else if (device.equals("vzw")) carrierRadioGroup.check(R.id.vzw_carrier_radio);
-		
+
+		String device = PreferencesSingleton.getInstance(context).prefs
+				.getString("device", null);
+		if (device != null) {
+			showDialog = false; 
+			if (device.equals("att"))
+				carrierRadioGroup.check(R.id.att_carrier_radio);
+			else if (device.equals("spr"))
+				carrierRadioGroup.check(R.id.spr_carrier_radio);
+			else if (device.equals("tmo"))
+				carrierRadioGroup.check(R.id.tmo_carrier_radio);
+			else if (device.equals("vzw"))
+				carrierRadioGroup.check(R.id.vzw_carrier_radio); 
+		}
+
 		Button dialogSaveButton = (Button) deviceDialog
 				.findViewById(R.id.device_save_button);
 		dialogSaveButton.setOnClickListener(new OnClickListener() {
@@ -102,11 +117,15 @@ public class MainActivity extends FragmentActivity {
 				default:
 					Toast.makeText(context, "please make a selection",
 							Toast.LENGTH_SHORT).show();
+					break;
 				}
+				adapter.InitSpinners();
 			}
 
 		});
-		if (!showDialog) deviceDialog.show();
+		if (showDialog)
+			deviceDialog.show();
+
 	}
 
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {

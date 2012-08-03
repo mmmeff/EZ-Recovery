@@ -5,7 +5,7 @@
     <string name="title_section0">About</string>
     <string name="title_section1">Recovery</string>
     <string name="devicedialogtitle">Please choose your carrier.</string>
-    <string name="save">Save</string>
+    <string name="save">Continue</string>
     <string name="att">AT&amp;T</string>
     <string name="spr">Sprint</string>
     <string name="tmo">T-Mobile</string>
