@@ -1,0 +1,25 @@
+<recoveries>
+
+    <carrier name="att" >
+        <recovery filename=".img">NAME</recovery>
+        <recovery filename=".img">Stock</recovery>
+    </carrier>
+    
+    <carrier name="spr" >
+        <recovery filename=".img">NAME</recovery>
+        <recovery filename=".img">Stock</recovery>
+    </carrier>
+    
+    <carrier name="tmo" >
+        <recovery filename=".img">NAME</recovery>
+        <recovery filename=".img">Stock</recovery>
+    </carrier>
+    
+    <carrier name="vzw" >
+        <recovery filename=".img">NAME</recovery>
+        <recovery filename=".img">Stock</recovery>
+        
+        <hybrid filename=".img">Invisiblek v2</hybrid>
+    </carrier>
+
+</recoveries>

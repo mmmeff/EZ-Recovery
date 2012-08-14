@@ -7,18 +7,27 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.res.AssetManager;
-import android.os.AsyncTask;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
+import android.widget.Toast;
+
+import com.mycila.*;
+import com.mycila.xmltool.XMLDoc;
+import com.mycila.xmltool.XMLTag;
+
+import org.apache.commons.io.FileUtils;
 
 @SuppressLint("SdCardPath")
 // this only runs on one device - hardcoding acceptable here!
+/**
+ * Copies files and loads an array of recoveries from assets/listing.xml
+ * @author Matt
+ *
+ */
 public class FileMan {
 
 	/** logcat tag **/
@@ -33,8 +42,8 @@ public class FileMan {
 	/** Location of the assets directory on the sdcard **/
 	public static String ASSET_LOCATION = "/mnt/sdcard/gs3ezrecovery";
 
-	/** debug value that will rewrite the file directory upon every boot **/
-	private final boolean RW = false;
+	/** debug value that will rewrite the file directory upon every boot if true **/
+	private final boolean RW = true;
 
 	/**
 	 * Default constructor for the File Manager. This class handles all the file
@@ -49,27 +58,28 @@ public class FileMan {
 		this.context = context;
 		VERSION = context.getString(R.string.version);
 
-		Initialize();
+		Initialize(); // make sure files are in place
+
 	}
 
 	/** take care of file business **/
 	public void Initialize() {
 		// check if files for the current version already exist.
-				switch (CheckForExistence()) {
-				case UPTODATE: // all set, we're done here!
-					break;
-				case OUTDATED: // flush the directory then rewrite it to sdcard
-					FlushDirectory();
-					PlaceDirectory();
-					CopyAssets();
-					StampDirectory();
-					break;
-				case UNEXISTENT: // copy assets over to sdcard
-					PlaceDirectory();
-					CopyAssets();
-					StampDirectory();
-					break;
-				}
+		switch (CheckForExistence()) {
+		case UPTODATE: // all set, we're done here!
+			break;
+		case OUTDATED: // flush the directory then rewrite it to sdcard
+			FlushDirectory();
+			PlaceDirectory();
+			CopyAssets();
+			StampDirectory();
+			break;
+		case UNEXISTENT: // copy assets over to sdcard
+			PlaceDirectory();
+			CopyAssets();
+			StampDirectory();
+			break;
+		}
 	}
 
 	/**
@@ -188,6 +198,28 @@ public class FileMan {
 				return FileExistence.OUTDATED;
 		} else
 			return FileExistence.UNEXISTENT;
+	}
+
+	/**
+	 * Parse assets/listing.xml and return a list of all recoveries
+	 * 
+	 * @return ArrayList of Recovery objects
+	 */
+	public ArrayList<Recovery> GetRecoveries(String carrier) {
+		XMLTag root = XMLDoc.from(new File("/sdcard/listing.xml"), true);
+		ArrayList<Recovery> result = new ArrayList<Recovery>();
+		
+		for (XMLTag c : root.getChilds()){
+			if (c.getAttribute("name").equals(carrier)){
+				for (XMLTag rec : c.getChilds()){
+					result.add(new Recovery(rec.getAttribute("filename"), rec.getText()));
+				}
+			}
+		}
+		Toast toast = Toast.makeText(context,
+				result.toString(), Toast.LENGTH_SHORT);
+		toast.show();
+		return result;
 	}
 
 	private enum FileExistence {

@@ -125,6 +125,7 @@ public class MainActivity extends FragmentActivity {
 		});
 		if (showDialog)
 			deviceDialog.show();
+		fileman.GetRecoveries("vzw");
 
 	}
 
