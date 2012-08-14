@@ -9,7 +9,12 @@ public class Recovery {
 		this.name = name;
 	}
 	
+	public String toString(){
+		return "Recovery: " + name + " \nfile: " + filename;
+	}
+	
 	public enum ImageType{
 		RECOVERY, HYBRID;
 	}
+	
 }

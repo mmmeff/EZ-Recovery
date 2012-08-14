@@ -51,18 +51,6 @@
             android:layout_height="wrap_content"
             android:text="@string/recovery_option_recovery" />
 
-        <RadioButton
-            android:id="@+id/recovery_radioButtonHybrid"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/recovery_option_hybrid" />
-
-        <RadioButton
-            android:id="@+id/recovery_radioButtonStock"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/recovery_option_stock" />
-
     </RadioGroup>
 
     <LinearLayout
@@ -105,14 +93,6 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/browseButton"
         android:layout_marginTop="-6dp" />
-    
-    <Spinner
-        android:id="@+id/recovery_hybrid_spinner"
-        android:layout_width="240dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/recovery_recovery_spinner"
-        android:layout_marginTop="1dp" />
 
    
 </RelativeLayout>

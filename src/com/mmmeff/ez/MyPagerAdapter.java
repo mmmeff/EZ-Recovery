@@ -24,7 +24,7 @@ public class MyPagerAdapter extends PagerAdapter {
 	private Commander commander;
 
 	private Context context;
-	private Spinner recovery_recoverySpinner, recovery_hybridSpinner;
+	private Spinner recovery_recoverySpinner;
 	private ArrayAdapter<CharSequence> recovery_recoveryAdapter,
 			recovery_hybridAdapter;
 	private Button browseButton, flashButton, rebootButton;
@@ -73,8 +73,6 @@ public class MyPagerAdapter extends PagerAdapter {
 			// set up recovery choices in spinners
 			recovery_recoverySpinner = (Spinner) view
 					.findViewById(R.id.recovery_recovery_spinner);
-			recovery_hybridSpinner = (Spinner) view
-					.findViewById(R.id.recovery_hybrid_spinner);
 			InitSpinners(); 
 
 			// configure button listeners
@@ -114,30 +112,6 @@ public class MyPagerAdapter extends PagerAdapter {
 								.putInt("last_recovery",
 										recovery_recoverySpinner
 												.getSelectedItemPosition())
-								.commit();
-						break;
-					case R.id.recovery_radioButtonHybrid:
-						success = commander
-								.FlashRecovery((String) recovery_hybridSpinner
-										.getSelectedItem());
-						PreferencesSingleton.getInstance(context).prefs
-								.edit()
-								.putInt("last_flash",
-										R.id.recovery_radioButtonHybrid)
-								.commit();
-						PreferencesSingleton.getInstance(context).prefs
-								.edit()
-								.putInt("last_hybrid",
-										recovery_hybridSpinner
-												.getSelectedItemPosition())
-								.commit();
-						break;
-					case R.id.recovery_radioButtonStock:
-						success = commander.FlashRecovery("Stock");
-						PreferencesSingleton.getInstance(context).prefs
-								.edit()
-								.putInt("last_flash",
-										R.id.recovery_radioButtonStock)
 								.commit();
 						break;
 					default:
@@ -207,12 +181,20 @@ public class MyPagerAdapter extends PagerAdapter {
 			browseButton.setOnClickListener(browseListener);
 
 			// load preferences
+			//check if set for hybrid (deprecated)
+			int last_hybrid = PreferencesSingleton.getInstance(context).prefs
+					.getInt("last_hybrid", -1);
+			if (last_hybrid != -1) {
+				recoveryRadioGroup.check(-1);
+				last_hybrid = -1;
+			}
+			
 			int last_flash = PreferencesSingleton.getInstance(context).prefs
 					.getInt("last_flash", 0);
 			if (last_flash != 0) {
 				recoveryRadioGroup.check(last_flash);
 			} else {
-				recoveryRadioGroup.check(R.id.recovery_radioButtonStock);
+				recoveryRadioGroup.check(-1);
 			}
 
 			String last_custom = PreferencesSingleton.getInstance(context).prefs
@@ -227,11 +209,7 @@ public class MyPagerAdapter extends PagerAdapter {
 				recovery_recoverySpinner.setSelection(last_recovery);
 			}
 
-			int last_hybrid = PreferencesSingleton.getInstance(context).prefs
-					.getInt("last_hybrid", -1);
-			if (last_hybrid != -1) {
-				recovery_hybridSpinner.setSelection(last_hybrid);
-			}
+			
 
 			PreferencesSingleton.getInstance(context).prefs.edit().commit();
 			break;

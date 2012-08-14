@@ -1,5 +1,7 @@
 package com.mmmeff.ez;
 
+import java.util.ArrayList;
+
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -77,7 +79,7 @@ public class MainActivity extends FragmentActivity {
 		String device = PreferencesSingleton.getInstance(context).prefs
 				.getString("device", null);
 		if (device != null) {
-			showDialog = false; 
+			showDialog = false;
 			if (device.equals("att"))
 				carrierRadioGroup.check(R.id.att_carrier_radio);
 			else if (device.equals("spr"))
@@ -85,7 +87,7 @@ public class MainActivity extends FragmentActivity {
 			else if (device.equals("tmo"))
 				carrierRadioGroup.check(R.id.tmo_carrier_radio);
 			else if (device.equals("vzw"))
-				carrierRadioGroup.check(R.id.vzw_carrier_radio); 
+				carrierRadioGroup.check(R.id.vzw_carrier_radio);
 		}
 
 		Button dialogSaveButton = (Button) deviceDialog
@@ -125,7 +127,10 @@ public class MainActivity extends FragmentActivity {
 		});
 		if (showDialog)
 			deviceDialog.show();
-		fileman.GetRecoveries("vzw");
+
+		ArrayList<Recovery> recoveries = fileman
+				.GetRecoveries(PreferencesSingleton.getInstance(context).prefs
+						.getString("device", "vzw"));
 
 	}
 

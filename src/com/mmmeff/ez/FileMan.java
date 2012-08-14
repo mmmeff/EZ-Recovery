@@ -44,6 +44,9 @@ public class FileMan {
 
 	/** debug value that will rewrite the file directory upon every boot if true **/
 	private final boolean RW = true;
+	
+	/** the assets/listing.xml file containing the listing of recovery files**/
+	private String listingFile;
 
 	/**
 	 * Default constructor for the File Manager. This class handles all the file
@@ -59,7 +62,15 @@ public class FileMan {
 		VERSION = context.getString(R.string.version);
 
 		Initialize(); // make sure files are in place
-
+		
+		//load xml file
+		try {
+			listingFile = FileUtils.readFileToString(new File("/sdcard/gs3ezrecovery/listing.xml"));
+		} catch (IOException e) {
+			Toast toast = Toast.makeText(context,
+					e.getMessage(), Toast.LENGTH_SHORT);
+		}
+		
 	}
 
 	/** take care of file business **/
@@ -186,7 +197,7 @@ public class FileMan {
 	private FileExistence CheckForExistence() {
 		// rewrite if rewrite debug value is true
 		if (RW)
-			return FileExistence.UNEXISTENT;
+			return FileExistence.OUTDATED; 
 
 		File file = new File(ASSET_LOCATION);
 		if (file.isDirectory()) {
@@ -206,7 +217,8 @@ public class FileMan {
 	 * @return ArrayList of Recovery objects
 	 */
 	public ArrayList<Recovery> GetRecoveries(String carrier) {
-		XMLTag root = XMLDoc.from(new File("/sdcard/listing.xml"), true);
+		XMLTag root = XMLDoc.from(listingFile, true);
+
 		ArrayList<Recovery> result = new ArrayList<Recovery>();
 		
 		for (XMLTag c : root.getChilds()){
@@ -216,9 +228,12 @@ public class FileMan {
 				}
 			}
 		}
-		Toast toast = Toast.makeText(context,
-				result.toString(), Toast.LENGTH_SHORT);
-		toast.show();
+		for (Recovery r : result){
+			Toast toast = Toast.makeText(context,
+					r.toString(), Toast.LENGTH_LONG);
+			toast.show();
+		}
+		
 		return result;
 	}
 
